@@ -14,16 +14,18 @@ if ( ! defined('ABSPATH') ) {
 
 include_once ABSPATH . WPINC . '/class-IXR.php';
 
-function load_wp_json_rpc_api()
-{
-	global $wp_json_rpc_api;
-	if ( ! class_exists( 'WP_JSON_RPC_API_Control' ) ) {
-		require_once dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'core.php';
+if ( ! function_exists( 'load_wp_json_rpc_api' ) ) {
+	function load_wp_json_rpc_api()
+	{
+		global $wp_json_rpc_api;
+		if ( ! class_exists( 'WP_JSON_RPC_API_Control' ) ) {
+			require_once dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'core.php';
+		}
+
+		if ( empty( $wp_json_rpc_api ) ) {
+			$wp_json_rpc_api = new WP_JSON_RPC_API_Control;
+		}
 	}
 
-	if ( empty( $wp_json_rpc_api ) ) {
-		$wp_json_rpc_api = new WP_JSON_RPC_API_Control;
-	}
+	add_action('plugins_loaded', 'load_wp_json_rpc_api');
 }
-
-add_action('plugins_loaded', 'load_wp_json_rpc_api');
