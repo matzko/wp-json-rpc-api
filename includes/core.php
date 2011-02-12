@@ -24,11 +24,11 @@ class WP_JSON_RPC_API_Control
 			$decoded = json_decode( $request );	
 
 			// in some configurations the request is slashed even when get_magic_quotes_gpc returns 0--not sure why
-			if ( null == $decoded ) {
+			if ( empty( $decoded ) || empty( $decoded->jsonrpc ) ) {
 				$decoded = json_decode( stripslashes( $request ) );
 			}
 
-			if ( null !== $decoded ) {
+			if ( ! empty( $decoded ) && ! empty( $decoded->jsonrpc ) ) {
 				$this->handle_json_request( $decoded );
 			}
 		}
