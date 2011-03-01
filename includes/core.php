@@ -11,6 +11,8 @@ class WP_JSON_RPC_API_Control
 		$this->view = new WP_JSON_RPC_API_View; 
 		add_action('init', array(&$this, 'event_init'));	
 		add_action('init', array(&$this->view, 'enqueue_helper_js'));	
+
+		do_action( 'wp_json_rpc_api_instantiated' );
 	}
 
 	public function event_init()
