@@ -95,6 +95,7 @@ class WP_JSON_RPC_API_View
 	{
 		$code = (int) $error->get_error_code();
 		$message = $error->get_error_message();
+		$data = null === $data ? $error->get_error_data() : $data;
 
 		$error = array(
 			'code' => $code,
